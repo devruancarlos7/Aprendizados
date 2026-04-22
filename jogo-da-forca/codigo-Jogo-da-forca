@@ -46,3 +46,7 @@ if erros < 6:
     print(f'\n\nGanhou!!!')
 else:
     print(f'\n\nPerdeu!!!')
+
+
+
+
