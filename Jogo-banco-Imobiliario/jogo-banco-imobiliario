@@ -1,0 +1,49 @@
+qtdJogadores = int(input('Quantidade de jogadores: '))
+jogador = {}
+
+for i in range(qtdJogadores):
+    nome = input('Nome jogador: ')
+    jogador[nome] = 100000
+
+rodada = 1
+
+while True:
+    print(f'\n--- Rodada: {rodada} ---')
+
+    # contar vivos
+    vivos = sum(1 for dinheiro in jogador.values() if dinheiro > 0)
+
+    if vivos < 2:
+        print('Jogo encerrado')
+        break
+
+    # percorrer jogadores
+    for nome in jogador:
+        if jogador[nome] <= 0:
+            continue
+
+        print(f"\n{nome} tem {jogador[nome]}")
+
+        operacao = input('retirar ou adicionar: ').lower()
+
+        if operacao == 'retirar':
+            valor = int(input(f"Quanto retirar de {nome}? "))
+            jogador[nome] -= valor
+
+        elif operacao == 'adicionar':
+            valor = int(input(f"Quanto adicionar ao {nome}? "))
+            jogador[nome] += valor
+
+        else:
+            print('Operação inválida')
+
+        # evitar saldo negativo
+        if jogador[nome] < 0:
+            jogador[nome] = 0
+
+    rodada += 1
+
+print("\n--- Resultado final ---")
+for nome, dinheiro in jogador.items():
+    print(f'Jogador: {nome} | {dinheiro}')
+    
