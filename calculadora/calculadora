@@ -1,0 +1,64 @@
+def adicao(a, b):
+    return a + b
+
+def subtracao(a, b):
+    return a - b
+
+def divisao(a, b):
+    return a / b
+
+def multiplicacao(a, b):
+    return a * b
+
+def porcentagem(a, b):
+    return a * b / 100
+
+a = int(input('Primeiro numero: '))
+
+while True: 
+
+    operacao = input(str('Operação: ')).lower()
+
+    if operacao != 'adicao' or operacao != 'subitracao' or operacao != 'divisao' or operacao != 'multiplicacao' or operacao != 'porcentagem' or operacao != '+' or operacao !=  '-' or operacao != '*' or operacao != '/' or operacao != '%':
+        while True:
+            operacao = input(str('Operação: ')).lower()
+            if operacao == 'adicao' or operacao == 'subitracao' or operacao == 'divisao' or operacao == 'multiplicacao' or operacao == 'porcentagem' or operacao == '+' or operacao ==  '-' or operacao == '*' or operacao == '/' or operacao == '%':
+                break
+            else:
+                print('digita certo')
+            
+
+    b = int(input('segundo numero: '))
+
+    if operacao == 'adicao' or operacao == '+':
+        resultado = adicao(a, b)
+        print(adicao(a, b))
+    elif operacao == 'subitracao' or operacao == '-':
+        resultado = subtracao(a, b)
+        print(subtracao(a, b))
+    elif operacao == 'divisao' or operacao == '/':
+        resultado = divisao(a, b)
+        print(divisao(a, b))
+    elif operacao == 'multiplicacao' or operacao == '*':
+        resultado = multiplicacao(a, b)
+        print(multiplicacao(a, b))
+    elif operacao == 'porcentagem' or operacao == '%':
+        resultado = porcentagem(a, b)
+        print(porcentagem(a, b))
+        
+    parar = input('Continuar operacao s/n: ')
+
+    if parar == 's':
+        print('-' * 20)
+    else:
+        print('Obrigado por usar a calculadora')
+        break
+
+    a = resultado
+
+
+
+
+
+
+
