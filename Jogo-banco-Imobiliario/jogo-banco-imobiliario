@@ -1,49 +1,84 @@
 qtdJogadores = int(input('Quantidade de jogadores: '))
+if qtdJogadores > 6:
+    print('Quantidade de jogadores invalido, maximo 6. Inicie o programa novamente!')
+    exit()
+
 jogador = {}
+nmr_jogador = 1
 
 for i in range(qtdJogadores):
-    nome = input('Nome jogador: ')
+    nome = input(f'Nome jogador {nmr_jogador}: ').lower().strip()
+    nmr_jogador += 1
     jogador[nome] = 100000
 
 rodada = 1
 
 while True:
-    print(f'\n--- Rodada: {rodada} ---')
 
-    # contar vivos
+    print(f'\n--- Rodada: {rodada} ---')
+    # contagem dos jogadores vivos
     vivos = sum(1 for dinheiro in jogador.values() if dinheiro > 0)
 
     if vivos < 2:
-        print('Jogo encerrado')
+        print('\nJogo encerrado!')
         break
 
-    # percorrer jogadores
     for nome in jogador:
         if jogador[nome] <= 0:
             continue
 
         print(f"\n{nome} tem {jogador[nome]}")
 
-        operacao = input('retirar ou adicionar: ').lower()
+        # obriga a digitar uma operação correta
+        while True:
+            operacao = input('retirar, adicionar, passar ou transferir: ').lower().strip()
 
-        if operacao == 'retirar':
-            valor = int(input(f"Quanto retirar de {nome}? "))
-            jogador[nome] -= valor
+            if operacao == 'retirar':
+                valor = int(input(f"Quanto retirar de {nome}? "))
+                
+                if valor < 0:
+                    print('Valor não permitido, digite um numero positivo para realizar a opeção')
+                else:
+                    jogador[nome] -= valor
+                    break
 
-        elif operacao == 'adicionar':
-            valor = int(input(f"Quanto adicionar ao {nome}? "))
-            jogador[nome] += valor
+            elif operacao == 'adicionar':
+                valor = int(input(f"Quanto adicionar ao {nome}? "))
+                jogador[nome] += valor
+                break
 
-        else:
-            print('Operação inválida')
+            elif operacao == 'passar':
+                break 
 
-        # evitar saldo negativo
+            elif operacao == 'transferir':
+                destino = input("Para qual jogador transferir? ").lower().strip()
+                              
+                # Verifica se o jogador destino existe no dicionário e se não é ele mesmo
+                if destino in jogador and destino != nome:
+                    valor = int(input(f"Quanto transferir para {destino}? "))
+
+                    # Verifica se o jogador tem dinheiro suficiente para a transferência
+                    if valor <= jogador[nome]:
+                        jogador[nome] -= valor
+                        jogador[destino] += valor
+                        print(f"Transferencia de {valor} para {destino} realizada com sucesso!")
+                        break
+                    else:
+                        print(f"Saldo insuficiente! {nome} tem apenas {jogador[nome]}.")
+                        # Como não tem break aqui, ele volta a perguntar a operação
+                else:
+                    print("Jogador destino não encontrado ou inválido!")
+                    # Como não tem break aqui, ele volta a perguntar a operação
+
+            else:
+                print('Operação invalida! Digite novamente')
+
+        # Evitar saldo negativo
         if jogador[nome] < 0:
             jogador[nome] = 0
-
+            
     rodada += 1
 
 print("\n--- Resultado final ---")
 for nome, dinheiro in jogador.items():
-    print(f'Jogador: {nome} | {dinheiro}')
-    
+    print(f'Jogador: {nome} | Saldo: {dinheiro}') 
